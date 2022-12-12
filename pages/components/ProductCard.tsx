@@ -1,6 +1,6 @@
 import { Product } from '../types/Product';
 import Image from 'next/image';
-import React from 'react';
+
 
 type Props = {
   product: Product;
@@ -18,11 +18,11 @@ const ProductCard: React.FC<Props> = ({ product }) => {
         position: 'relative'
       }}
     >
-          <Image src={product.image} alt={product.name} width={200} height= {200}
+          <Image src={product.image} alt={product.name} width={300} height= {300}
               />
       <h3>{ product.name }</h3>
-      <p>Valoración { product.rating }</p>
-      <p>{ product.price}</p>
+      <p>Valoración {('★').repeat(product.rating).padEnd(5, '☆') }</p>
+      <p>{product.price.toLocaleString('en-US', { style: 'currency', currency: 'USD' })}</p>
     </div>
   );
 };

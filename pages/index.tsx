@@ -5,7 +5,8 @@ import ProductCard from './components/ProductCard';
 import PriceRangeFilter from './components/PriceRangeFilter';
 import ColorFilter from './components/ColorFilter';
 import RatingFilter from './components/RatingFilter';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { Filter } from './types/Filter';
 
 type Props = {
   products: Product[];
@@ -13,18 +14,35 @@ type Props = {
 
 const Home: NextPage<Props> = ( { products }: Props ) => {
   
-  const [filters, setFilters] = useState({
+  const [filters, setFilters] = useState<Record<string, Filter>>({
     price: null,
     color: null,
     rating: null,
-  })
+  });
+
+  const matches = useMemo(() => 
+  {
+    const filtersToApply = Object.values(filters).filter(Boolean);
+    let matches = products;
+
+    for (let filter of filtersToApply) {
+      matches = matches.filter(filter!);      
+    }
+
+    return matches;
+
+  }, [products, filters])
+ 
 
   return (
     <main style={{display: 'flex'}}>
       <aside>
         <h1>Filtering Products App</h1>
         <PriceRangeFilter />
-        <ColorFilter products={ products } />
+        <ColorFilter 
+          products={ products } 
+          onChange={(filter: Filter)=> setFilters({...filters, color: filter })}
+          />
         <RatingFilter />
         </aside>
       <section style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 12 }}>

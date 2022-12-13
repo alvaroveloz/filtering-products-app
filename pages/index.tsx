@@ -38,12 +38,16 @@ const Home: NextPage<Props> = ( { products }: Props ) => {
     <main style={{display: 'flex',gap: 12}}>
       <aside>
         <h1>Filtering Products App</h1>
-        <PriceRangeFilter />
+        <PriceRangeFilter 
+          onChange={(filter: Filter) => setFilters({ ...filters, price: filter })}
+        />
         <ColorFilter 
           products={ products } 
           onChange={(filter: Filter)=> setFilters({...filters, color: filter })}
           />
-        <RatingFilter />
+        <RatingFilter 
+          onChange={(filter: Filter) => setFilters({ ...filters, rating: filter })}
+        />
         </aside>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <h4>{matches.length} results</h4>

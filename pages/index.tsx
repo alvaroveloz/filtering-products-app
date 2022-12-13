@@ -35,7 +35,7 @@ const Home: NextPage<Props> = ( { products }: Props ) => {
  
 
   return (
-    <main style={{display: 'flex'}}>
+    <main style={{display: 'flex',gap: 12}}>
       <aside>
         <h1>Filtering Products App</h1>
         <PriceRangeFilter />
@@ -45,14 +45,17 @@ const Home: NextPage<Props> = ( { products }: Props ) => {
           />
         <RatingFilter />
         </aside>
-      <section style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 12 }}>
-          { products.map((product)=> (
-        <article key={product.id}>
-            <ProductCard product={product}></ProductCard>
-        </article>
-          ) ) }
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <h4>{matches.length} results</h4>
+        <section style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 12 }}>
+          {matches.map((product) => (
+            <article key={product.id}>
+              <ProductCard product={product}></ProductCard>
+            </article>
+          ))}
 
-      </section>
+        </section>
+      </div>
     </main>
   )
 }
